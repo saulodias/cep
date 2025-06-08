@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Query, HTTPException
+from fastapi import FastAPI, Query, HTTPException, File
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 from search_cep import CEPSearcher
@@ -35,13 +36,19 @@ async def root():
         "versao": "2.0.0",
         "endpoints": [
             "/cep/{cep} - Busca por CEP",
-            "/search - Busca geral de endereços"
+            "/search - Busca geral de endereços",
+            "/search.html - Interface de busca com autocompletar"
         ],
         "exemplo_uso": {
             "busca_por_cep": "/cep/01001000",
             "busca_geral": "/search?q=Av. Paulista&cidade=São Paulo&estado=SP"
         }
     }
+
+@app.get("/search.html")
+async def search_page():
+    """Serve a simple HTML page with autocomplete search"""
+    return FileResponse("search.html")
 
 @app.get("/cep/{cep}")
 async def get_cep(cep: str):

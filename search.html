@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca de CEP</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+        .search-container {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        input {
+            width: 600px;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+        input:focus {
+            border-color: #007bff;
+        }
+        .results {
+            max-height: 600px;
+            overflow-y: auto;
+            background-color: white;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .results table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        .results th, .results td {
+            padding: 6px 8px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 13px;
+        }
+        .results th {
+            background-color: #fff;
+            color: #666;
+            font-weight: 500;
+        }
+        .results tr {
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+        }
+        .results tr:hover {
+            background-color: #f8f9fa;
+        }
+        .results tr.copied {
+            background-color: #e8f5e9;
+        }
+        .no-results {
+            text-align: center;
+            color: #888;
+            padding: 15px;
+            font-size: 13px;
+        }
+        .copy-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            background-color: #4caf50;
+            color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .copy-toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Busca de CEP</h1>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Digite o endereço...">
+    </div>
+    <div id="results" class="results"></div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const resultsDiv = document.getElementById('results');
+        const copyToast = document.createElement('div');
+        copyToast.className = 'copy-toast';
+        document.body.appendChild(copyToast);
+
+        function showToast(message) {
+            copyToast.textContent = message;
+            copyToast.classList.add('show');
+            setTimeout(() => copyToast.classList.remove('show'), 2000);
+        }
+
+        function formatAddressForCopy(address) {
+            // Format: logradouro, cidade - UF, CEP
+            return `${address.logradouro}, ${address.cidade} - ${address.uf}, CEP: ${address.cep.slice(0, 5) + '-' + address.cep.slice(5)} ${address.complemento ?? ''}`;
+        }
+
+        searchInput.addEventListener('input', async function() {
+            const query = this.value.trim();
+            if (query.length < 3) {
+                resultsDiv.innerHTML = '';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/search?q=${encodeURIComponent(query)}&limit=10`);
+                const results = await response.json();                
+                resultsDiv.innerHTML = results.length > 0 ? 
+                    `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">CEP</th>
+                                    <th style="width: 250px;">Endereço</th>
+                                    <th style="width: 150px;">Complemento</th>
+                                    <th style="width: 150px;">Bairro</th>
+                                    <th style="width: 150px;">Cidade</th>
+                                    <th style="width: 50px;">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${results.map(({cep, logradouro, complemento, bairro, cidade, uf}) => `
+                                    <tr data-cep="${cep}" 
+                                        data-logradouro="${logradouro}" 
+                                        data-complemento="${complemento || ''}" 
+                                        data-bairro="${bairro || ''}" 
+                                        data-cidade="${cidade}" 
+                                        data-uf="${uf}">
+                                        <td>${cep.slice(0, 5) + '-' + cep.slice(5)}</td>
+                                        <td>${logradouro}</td>
+                                        <td>${complemento || ''}</td>
+                                        <td>${bairro || ''}</td>
+                                        <td>${cidade}</td>
+                                        <td>${uf}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    ` :
+                    '<div class="no-results">Nenhum resultado encontrado</div>';
+
+                // Add click handler to each row
+                const rows = resultsDiv.querySelectorAll('tr');
+                rows.forEach(row => {
+                    row.addEventListener('click', async () => {
+                        const address = {
+                            cep: row.getAttribute('data-cep'),
+                            logradouro: row.getAttribute('data-logradouro'),
+                            complemento: row.getAttribute('data-complemento'),
+                            bairro: row.getAttribute('data-bairro'),
+                            cidade: row.getAttribute('data-cidade'),
+                            uf: row.getAttribute('data-uf')
+                        };
+
+                        try {
+                            // Copy formatted address to clipboard
+                            await navigator.clipboard.writeText(formatAddressForCopy(address));
+                            row.classList.add('copied');
+                            setTimeout(() => row.classList.remove('copied'), 1000);
+                            showToast('Endereço copiado!');
+                        } catch (err) {
+                            console.error('Failed to copy:', err);
+                            showToast('Falha ao copiar');
+                        }
+                    });
+                });
+            } catch (error) {
+                console.error('Erro na busca:', error);
+                resultsDiv.innerHTML = '<div class="no-results">Erro ao buscar resultados</div>';
+            }
+        });
+    </script>
+</body>
+</html>
