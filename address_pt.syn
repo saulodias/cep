@@ -1,0 +1,489 @@
+r	rua
+r.	rua
+ruazinha	rua
+ruela	rua
+viela	rua
+
+av	avenida
+av.	avenida
+aven	avenida
+avenidao	avenida
+avenidinha	avenida
+
+tv	travessa
+tv.	travessa
+trav	travessa
+trav.	travessa
+
+pc	praca
+pc.	praca
+pca	praca
+pca.	praca
+prç	praca
+prç.	praca
+
+al	alameda
+al.	alameda
+alam	alameda
+alam.	alameda
+
+est	estrada
+est.	estrada
+estr	estrada
+estr.	estrada
+
+rod	rodovia
+rod.	rodovia
+
+blvd	boulevard
+blvd.	boulevard
+boul	boulevard
+
+bc	beco
+bc.	beco
+
+vla	viela
+vla.	viela
+
+pas	passagem
+pas.	passagem
+pass	passagem
+pass.	passagem
+psg	passagem
+psg.	passagem
+
+psa	passarela
+psa.	passarela
+
+pte	ponte
+pte.	ponte
+
+vid	viaduto
+vid.	viaduto
+vd	viaduto
+vd.	viaduto
+
+lad	ladeira
+lad.	ladeira
+
+esc	escadaria
+esc.	escadaria
+
+elev	elevada
+elev.	elevada
+
+term	terminal
+term.	terminal
+
+marg	marginal
+marg.	marginal
+
+cplx	complexo
+cplx.	complexo
+
+esp	esplanada
+esp.	esplanada
+
+lg	largo
+lg.	largo
+lgo	largo
+lgo.	largo
+
+gal	galeria
+gal.	galeria
+
+fr	feira
+fr.	feira
+
+merc	mercado
+merc.	mercado
+
+q	quadra
+q.	quadra
+qd	quadra
+qd.	quadra
+
+bsq	bosque
+bsq.	bosque
+
+st	sitio
+st.	sitio
+
+chac	chacara
+chac.	chacara
+
+faz	fazenda
+faz.	fazenda
+
+mo	morro
+mo.	morro
+
+cpo	campo
+cpo.	campo
+
+vl	vila
+vl.	vila
+
+col	colonia
+col.	colonia
+
+dist	distrito
+dist.	distrito
+
+set	setor
+set.	setor
+
+nuc	nucleo
+nuc.	nucleo
+
+cj	conjunto
+cj.	conjunto
+conj	conjunto
+conj.	conjunto
+
+pq	parque
+pq.	parque
+prq	parque
+prq.	parque
+
+jd	jardim
+jd.	jardim
+jardins	jardim
+
+lot	loteamento
+lot.	loteamento
+
+cond	condominio
+cond.	condominio
+
+res	residencial
+res.	residencial
+
+cel	coronel
+cel.	coronel
+cnel	coronel
+cnel.	coronel
+
+dr	doutor
+dr.	doutor
+dor	doutor
+
+prof	professor
+prof.	professor
+
+pe	padre
+pe.	padre
+p.	padre
+
+pres	presidente
+pres.	presidente
+
+gov	governador
+gov.	governador
+
+sen	senador
+sen.	senador
+
+dep	deputado
+dep.	deputado
+
+ver	vereador
+ver.	vereador
+
+gen	general
+gen.	general
+
+maj	major
+maj.	major
+
+cap	capitao
+cap.	capitao
+
+alm	almirante
+alm.	almirante
+
+brig	brigadeiro
+brig.	brigadeiro
+
+mal	marechal
+mal.	marechal
+mar	marechal
+mar.	marechal
+
+ten	tenente
+ten.	tenente
+
+sgt	sargento
+sgt.	sargento
+
+cb	cabo
+cb.	cabo
+
+sd	soldado
+sd.	soldado
+
+min	ministro
+min.	ministro
+
+mons	monsenhor
+mons.	monsenhor
+
+bp	bispo
+bp.	bispo
+
+card	cardeal
+card.	cardeal
+
+fr	frei
+fr.	frei
+
+ir	irma
+ir.	irma
+ir	irmao
+ir.	irmao
+
+sto	santo
+sto.	santo
+
+sta	santa
+sta.	santa
+
+s	sao
+s.	sao
+
+n	norte
+n.	norte
+
+s	sul
+s.	sul
+
+l	leste
+l.	leste
+
+o	oeste
+o.	oeste
+
+ne	nordeste
+ne.	nordeste
+
+no	noroeste
+no.	noroeste
+
+se	sudeste
+se.	sudeste
+
+so	sudoeste
+so.	sudoeste
+
+ant	antigo
+ant.	antigo
+
+nv	novo
+nv.	novo
+
+vlh	velho
+vlh.	velho
+
+princ	principal
+princ.	principal
+
+cen	central
+cen.	central
+
+mun	municipal
+mun.	municipal
+
+est	estadual
+est.	estadual
+
+fed	federal
+fed.	federal
+
+reg	regional
+reg.	regional
+
+loc	local
+loc.	local
+
+int	interior
+int.	interior
+
+sup	superior
+sup.	superior
+
+inf	inferior
+inf.	inferior
+
+alt	alto
+alt.	alto
+
+bx	baixo
+bx.	baixo
+
+# Additional street types
+acamp	acampamento
+acamp.	acampamento
+
+ac	acesso
+ac.	acesso
+
+aer	aeroporto
+aer.	aeroporto
+
+an	anel
+an.	anel
+
+art	arteria
+art.	arteria
+
+assoc	associacao
+assoc.	associacao
+
+bco	bloco
+bco.	bloco
+
+br	rodovia
+br.	rodovia
+
+cais	cais
+
+calc	calcada
+calc.	calcada
+
+calcadao	calcadao
+
+cam	caminho
+cam.	caminho
+
+can	canal
+can.	canal
+
+cent	centro
+cent.	centro
+
+ciclov	ciclovia
+ciclov.	ciclovia
+
+com	comunidade
+com.	comunidade
+
+cont	contorno
+cont.	contorno
+
+corr	corredor
+corr.	corredor
+
+desc	descida
+desc.	descida
+
+desv	desvio
+desv.	desvio
+
+eix	eixo
+eix.	eixo
+
+eng	engenho
+eng.	engenho
+
+ent	entrada
+ent.	entrada
+
+esc	escada
+esc.	escada
+
+estac	estacao
+estac.	estacao
+
+fav	favela
+fav.	favela
+
+glb	gleba
+glb.	gleba
+
+grj	granja
+grj.	granja
+
+ilh	ilha
+ilh.	ilha
+
+jard	jardinete
+jard.	jardinete
+
+lgo	lago
+lgo.	lago
+
+lin	linha
+lin.	linha
+
+marg	margem
+marg.	margem
+
+mod	modulo
+mod.	modulo
+
+par	paralela
+par.	paralela
+
+pass	passeio
+pass.	passeio
+
+pat	patio
+pat.	patio
+
+pt	ponta
+pt.	ponta
+
+pto	porto
+pto.	porto
+
+psto	posto
+psto.	posto
+
+pov	povoado
+pov.	povoado
+
+pr	praia
+pr.	praia
+
+prol	prolongamento
+prol.	prolongamento
+
+ram	ramal
+ram.	ramal
+
+rmp	rampa
+rmp.	rampa
+
+rec	recanto
+rec.	recanto
+
+rot	rotatoria
+rot.	rotatoria
+
+rotula	rotatoria
+
+serv	servidao
+serv.	servidao
+
+sub	subida
+sub.	subida
+
+tr	trecho
+tr.	trecho
+
+trev	trevo
+trev.	trevo
+
+un	unidade
+un.	unidade
+
+val	vale
+val.	vale
+
+ver	vereda
+ver.	vereda
+
+via	via
+
+zon	zona
+zon.	zona
