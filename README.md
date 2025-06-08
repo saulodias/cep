@@ -99,8 +99,19 @@ Isto irá:
   - Plurais (casa → casas)
   - Títulos (Cel. → Coronel)
   - E muito mais
-- Tratamento adequado de acentos do português brasileiro
-- Busca eficiente usando índices GiST do PostgreSQL
+
+## Atualizando Vectors de Busca
+
+Após a importação inicial dos dados ou quando necessário atualizar os vetores de busca, execute:
+
+```bash
+psql -U postgres -d cep_database -f sql/setup_search_vectors.sql
+```
+
+Este comando:
+1. Atualiza os vetores de busca para todos os endereços
+2. Mostra o progresso da atualização em porcentagem
+3. Verifica a conclusão do processo
 
 ## Esquema do Banco de Dados
 

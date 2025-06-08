@@ -70,23 +70,71 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Function to update search vectors for all records
+-- Create function to update search vectors with progress tracking
 CREATE OR REPLACE FUNCTION update_all_search_vectors()
 RETURNS void AS $$
+DECLARE
+    total_records integer;
+    current_record integer := 0;
+    batch_size integer := 100;
 BEGIN
-    UPDATE ceps_search
+    -- Create temporary table for progress tracking
+    CREATE TEMPORARY TABLE IF NOT EXISTS progress (
+        current_record integer,
+        total_records integer,
+        batch_size integer
+    ) ON COMMIT DROP;
+    
+    -- Get total number of records
+    SELECT COUNT(*) INTO total_records FROM ceps_search;
+    
+    -- Update with progress tracking
+    FOR current_record IN 1..total_records BY batch_size LOOP
+        UPDATE ceps_search 
+        SET search_vector = create_search_vector(
+            logradouro, 
+            complemento, 
+            bairro, 
+            cidade, 
+            uf
+        )
+        WHERE id >= current_record AND id < current_record + batch_size;
+        
+        -- Insert progress into temp table
+        INSERT INTO progress (current_record, total_records, batch_size)
+        VALUES (current_record, total_records, batch_size);
+        
+        -- Show progress for this batch
+        RAISE NOTICE 'Progress: %%%', round((current_record * 100.0) / total_records, 1);
+    END LOOP;
+    
+    -- Update remaining records
+    UPDATE ceps_search 
     SET search_vector = create_search_vector(
         logradouro, 
         complemento, 
         bairro, 
         cidade, 
         uf
-    );
+    )
+    WHERE id >= current_record;
+    
+    -- Insert final progress
+    INSERT INTO progress (current_record, total_records, batch_size)
+    VALUES (total_records, total_records, batch_size);
 END;
 $$ LANGUAGE plpgsql;
 
 -- Execute the update
 SELECT update_all_search_vectors();
+
+-- Show progress
+SELECT 
+    'Progress:' as status,
+    round((current_record * 100.0) / total_records, 1) as percentage
+FROM progress
+ORDER BY current_record DESC
+LIMIT 1;
 
 -- Check the setup
 SELECT 'Search vector setup complete!' as status;
