@@ -166,14 +166,12 @@ Todas as buscas tratam:
 #### GET /cep/{cep}
 Retorna informações detalhadas sobre um CEP específico.
 
-#### GET /cep/busca
+#### GET /search
 Busca CEPs com base em critérios.
 
 Parâmetros de consulta:
-- `logradouro`: Nome da rua, avenida, etc.
-- `bairro`: Nome do bairro
-- `cidade`: Nome da cidade
-- `estado`: Nome ou sigla do estado
+- `q`: Termo de busca (logradouro, bairro, etc.)
+- `limit`: Número máximo de resultados (1-100)
 
 ### Exemplos de Uso da API
 
@@ -182,8 +180,8 @@ Parâmetros de consulta:
 curl http://localhost:8000/cep/01310000
 
 # Buscar por endereço
-curl http://localhost:8000/cep/busca?logradouro=Avenida%20Paulista&cidade=São%20Paulo
+curl "http://localhost:8000/search?q=Avenida%20Paulista&limit=10"
 
 # Buscar por bairro
-curl http://localhost:8000/cep/busca?bairro=Centro&cidade=Rio%20de%20Janeiro
-``` 
+curl "http://localhost:8000/search?q=Centro&limit=10"
+```
