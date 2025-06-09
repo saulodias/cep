@@ -83,6 +83,7 @@ psql -U postgres -c "CREATE DATABASE cep_database;"
 psql -U postgres -d cep_database -f "sql/create_tables.sql"
 psql -U postgres -d cep_database -f "sql/setup_config.sql"
 psql -U postgres -d cep_database -f "sql/setup_normalization.sql"
+psql -U postgres -d cep_database -f "sql/setup_search_vectors.sql"
 ```
 
 ## Preparando os Dados
@@ -107,14 +108,10 @@ Após configurar o Synonym Dictionary e executar os scripts SQL, e ter decomprim
 python import_cep_data.py
 ```
 
-Isto irá importar estados, cidades e dados de CEP.
+O trigger no banco de dados garantirá que os vetores de busca sejam atualizados automaticamente para novos registros. Se você precisar atualizar os vetores de busca para registros existentes, execute:
 
-## Atualizando Vectors de Busca
-
-Após a importação inicial dos dados ou quando necessário atualizar os vetores de busca, execute:
-
-```bash
-psql -U postgres -d cep_database -f sql/setup_search_vectors.sql
+```sql
+SELECT update_all_search_vectors();
 ```
 
 Isso preencherá os vetores de busca para todos os endereços, garantirá que todos os dados estejam normalizados e prontos para a busca full-text.
@@ -133,15 +130,19 @@ Isso preencherá os vetores de busca para todos os endereços, garantirá que to
 
 ### Estados
 - Chave primária: id
-- Campos: nome, sigla, nome_normalizado, nome_busca (tsvector)
+- Campos: nome (VARCHAR(100)), sigla (CHAR(2) UNIQUE), nome_normalizado, nome_busca (tsvector)
 
 ### Cidades
 - Chave primária: id
-- Campos: nome, estado_id (FK), nome_normalizado, nome_busca (tsvector)
+- Campos: nome (VARCHAR(255)), estado_id (FK para estados)
 
 ### CEPs
-- Chave primária: cep
-- Campos: logradouro, complemento, bairro, cidade_id (FK), estado_id (FK), endereco_busca (tsvector)
+- Chave primária: id
+- Campos: cep (CHAR(8) UNIQUE), logradouro (TEXT), complemento (TEXT), bairro (VARCHAR(100)), cidade_id (FK para cidades), estado_id (FK para estados)
+
+### CEPs Search
+- Chave primária: id
+- Campos: cep (CHAR(8) UNIQUE), logradouro (TEXT), complemento (TEXT), bairro (VARCHAR(100)), cidade (VARCHAR(100)), uf (CHAR(2)), search_vector (tsvector)
 
 ## Capacidades de Busca
 

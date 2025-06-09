@@ -67,7 +67,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Create function to update search vectors with progress tracking
+-- Create function to update all search vectors with progress tracking
 CREATE OR REPLACE FUNCTION update_all_search_vectors()
 RETURNS void AS $$
 DECLARE
@@ -75,13 +75,6 @@ DECLARE
     current_record integer := 0;
     batch_size integer := 100;
 BEGIN
-    -- Create temporary table for progress tracking
-    CREATE TEMPORARY TABLE IF NOT EXISTS progress (
-        current_record integer,
-        total_records integer,
-        batch_size integer
-    ) ON COMMIT DROP;
-    
     -- Get total number of records
     SELECT COUNT(*) INTO total_records FROM ceps_search;
     
@@ -97,11 +90,6 @@ BEGIN
         )
         WHERE id >= current_record AND id < current_record + batch_size;
         
-        -- Insert progress into temp table
-        INSERT INTO progress (current_record, total_records, batch_size)
-        VALUES (current_record, total_records, batch_size);
-        
-        -- Show progress for this batch
         RAISE NOTICE 'Progress: %%%', round((current_record * 100.0) / total_records, 1);
     END LOOP;
     
@@ -115,26 +103,8 @@ BEGIN
         uf
     )
     WHERE id >= current_record;
-    
-    -- Insert final progress
-    INSERT INTO progress (current_record, total_records, batch_size)
-    VALUES (total_records, total_records, batch_size);
 END;
 $$ LANGUAGE plpgsql;
 
--- Execute the update
-SELECT update_all_search_vectors();
-
--- Show progress
-SELECT 
-    'Progress:' as status,
-    round((current_record * 100.0) / total_records, 1) as percentage
-FROM progress
-ORDER BY current_record DESC
-LIMIT 1;
-
--- Check the setup
-SELECT 'Search vector setup complete!' as status;
-SELECT COUNT(*) as total_records, 
-       COUNT(search_vector) as records_with_search_vector 
-FROM ceps_search;
+-- Note: To update search vectors manually, run:
+-- SELECT update_all_search_vectors();

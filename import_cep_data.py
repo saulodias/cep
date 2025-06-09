@@ -155,26 +155,58 @@ def import_ceps(conn):
 def populate_search_table(conn):
     """Populate the search table from the normalized data"""
     with conn.cursor() as cur:
-        cur.execute("""
-            INSERT INTO ceps_search (cep, logradouro, complemento, bairro, cidade, uf)
-            SELECT 
-                c.cep,
-                c.logradouro,
-                c.complemento,
-                c.bairro,
-                ci.nome as cidade,
-                e.uf
-            FROM ceps c
-            JOIN cidades ci ON c.cidade_id = ci.id
-            JOIN estados e ON ci.estado_id = e.id
-            ON CONFLICT (cep) DO UPDATE SET
-                logradouro = EXCLUDED.logradouro,
-                complemento = EXCLUDED.complemento,
-                bairro = EXCLUDED.bairro,
-                cidade = EXCLUDED.cidade,
-                uf = EXCLUDED.uf;
-        """)
-    conn.commit()
+        # Reset the sequence to start from 1
+        cur.execute("DELETE FROM ceps_search;")
+        cur.execute("ALTER SEQUENCE ceps_search_id_seq RESTART WITH 1;")
+        conn.commit()
+        
+        # Get total number of records
+        cur.execute("SELECT COUNT(*) FROM ceps")
+        total_records = cur.fetchone()[0]
+        
+        print(f"\nTotal records to process: {total_records:,}")
+        
+        # Process in batches of 10,000 records
+        batch_size = 10000
+        records_processed = 0
+        
+        # Show progress bar
+        with tqdm(total=total_records, desc="Populating search table", unit="records") as pbar:
+            while records_processed < total_records:
+                # Get the next batch of records
+                cur.execute("""
+                    WITH batch AS (
+                        SELECT 
+                            c.cep,
+                            c.logradouro,
+                            c.complemento,
+                            c.bairro,
+                            ci.nome as cidade,
+                            e.uf
+                        FROM ceps c
+                        JOIN cidades ci ON c.cidade_id = ci.id
+                        JOIN estados e ON ci.estado_id = e.id
+                        WHERE c.id > %s
+                        ORDER BY c.id
+                        LIMIT %s
+                    )
+                    INSERT INTO ceps_search (cep, logradouro, complemento, bairro, cidade, uf)
+                    SELECT * FROM batch
+                    ON CONFLICT (cep) DO UPDATE SET
+                        logradouro = EXCLUDED.logradouro,
+                        complemento = EXCLUDED.complemento,
+                        bairro = EXCLUDED.bairro,
+                        cidade = EXCLUDED.cidade,
+                        uf = EXCLUDED.uf
+                """, (records_processed, batch_size))
+                
+                # Update progress
+                records_processed += batch_size
+                pbar.update(batch_size)
+                
+                # Commit periodically
+                conn.commit()
+                
 
 def main():
     conn = connect_to_db()
