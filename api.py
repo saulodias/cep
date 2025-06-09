@@ -30,24 +30,12 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    """Endpoint raiz da API com informações básicas"""
-    return {
-        "nome": "API de CEP Brasileiro",
-        "versao": "2.0.0",
-        "endpoints": [
-            "/cep/{cep} - Busca por CEP",
-            "/search - Busca geral de endereços",
-            "/search.html - Interface de busca com autocompletar"
-        ],
-        "exemplo_uso": {
-            "busca_por_cep": "/cep/01001000",
-            "busca_geral": "/search?q=Av. Paulista&cidade=São Paulo&estado=SP"
-        }
-    }
+    """Endpoint raiz da API que redireciona para a documentação"""
+    return FileResponse("index.html")
 
 @app.get("/search.html")
 async def search_page():
-    """Serve a simple HTML page with autocomplete search"""
+    """Serve uma página HTML simples com busca autocompletável"""
     return FileResponse("search.html")
 
 @app.get("/cep/{cep}")

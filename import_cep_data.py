@@ -182,11 +182,7 @@ def main():
         import_states(conn)
         import_cities(conn)
         import_ceps(conn)
-        
-        # Setup search vectors
-        # with conn.cursor() as cur:
-        #     cur.execute(open(os.path.join(SQL_DIR, 'setup_search_vector.sql'), 'r').read())
-        # conn.commit()
+        populate_search_table(conn)
     finally:
         conn.close()
 
