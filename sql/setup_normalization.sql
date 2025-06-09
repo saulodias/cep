@@ -157,12 +157,12 @@ END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 -- Test the normalization
-SELECT normalize_address('28 de setembro') as test1;
-SELECT normalize_address('vinte e oito de setembro') as test2;  
-SELECT normalize_address('rua 28') as test3;  -- Now normalizes!
-SELECT normalize_address('avenida 1ª') as test4;  -- Ordinals work!
-SELECT normalize_address('boulevard 28') as test5;  -- Any context!
-SELECT normalize_address('1o de marco') as test6;
-SELECT normalize_address('1º de marco') as test7;
-SELECT normalize_address('10o cartório') as test8;
+-- SELECT normalize_address('28 de setembro') as test1;
+-- SELECT normalize_address('vinte e oito de setembro') as test2;  
+-- SELECT normalize_address('rua 28') as test3;  -- Now normalizes!
+-- SELECT normalize_address('avenida 1ª') as test4;  -- Ordinals work!
+-- SELECT normalize_address('boulevard 28') as test5;  -- Any context!
+-- SELECT normalize_address('1o de marco') as test6;
+-- SELECT normalize_address('1º de marco') as test7;
+-- SELECT normalize_address('10o cartório') as test8;
 

@@ -75,20 +75,50 @@ O sistema utiliza um thesaurus personalizado para lidar com variações de ender
    ls "/c/Program Files/PostgreSQL/17/share/tsearch_data/address_pt.ths"
    ```
 
-## Importando os Dados
+## Configuração do Banco de Dados
 
-Após configurar o thesaurus, importe os dados de CEP:
-
+1. Crie o banco de dados e execute os scripts SQL importantes na ordem:
 ```bash
-python import_cep_data.py --recreate-tables
+psql -U postgres -c "CREATE DATABASE cep_database;"
+psql -U postgres -d cep_database -f "sql/create_tables.sql"
+psql -U postgres -d cep_database -f "sql/setup_config.sql"
+psql -U postgres -d cep_database -f "sql/setup_normalization.sql"
 ```
 
-Isto irá:
-1. Criar o banco de dados se não existir
-2. Criar as tabelas e índices necessários
-3. Configurar a configuração personalizada de busca textual
-4. Importar estados, cidades e dados de CEP
-5. Criar índices de busca full-text
+## Preparando os Dados
+
+Antes de importar os dados, você precisará decomprimir o arquivo `csv.tar.gz`:
+
+```bash
+# Windows (usando 7-Zip ou PowerShell)
+tar -xzf csv.tar.gz
+
+# Linux/Mac
+tar -xzf csv.tar.gz
+```
+
+Isso criará o arquivo `csv/cep.csv` que será usado para a importação.
+
+## Importando os Dados
+
+Após configurar o thesaurus e executar os scripts SQL, e ter decomprimido o arquivo CSV, importe os dados de CEP:
+
+```bash
+python import_cep_data.py
+```
+
+Isto irá importar estados, cidades e dados de CEP.
+
+## Atualizando Vectors de Busca
+
+Após a importação inicial dos dados ou quando necessário atualizar os vetores de busca, execute:
+
+```bash
+psql -U postgres -d cep_database -f sql/setup_search_vectors.sql
+```
+
+Isso preencherá os vetores de busca para todos os endereços, garantirá que todos os dados estejam normalizados e prontos para a busca full-text.
+
 
 ## Funcionalidades
 
@@ -99,19 +129,6 @@ Isto irá:
   - Plurais (casa → casas)
   - Títulos (Cel. → Coronel)
   - E muito mais
-
-## Atualizando Vectors de Busca
-
-Após a importação inicial dos dados ou quando necessário atualizar os vetores de busca, execute:
-
-```bash
-psql -U postgres -d cep_database -f sql/setup_search_vectors.sql
-```
-
-Este comando:
-1. Atualiza os vetores de busca para todos os endereços
-2. Mostra o progresso da atualização em porcentagem
-3. Verifica a conclusão do processo
 
 ## Esquema do Banco de Dados
 
