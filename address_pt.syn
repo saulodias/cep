@@ -1,9 +1,10 @@
+rua	rua
 r	rua
 r.	rua
-ruazinha	rua
 ruela	rua
-viela	rua
+ruazinha	rua
 
+avenida	avenida
 av	avenida
 av.	avenida
 aven	avenida
@@ -14,7 +15,10 @@ tv	travessa
 tv.	travessa
 trav	travessa
 trav.	travessa
+travessa	travessa
 
+praca	praça
+praça	praça
 pc	praca
 pc.	praca
 pca	praca
@@ -22,29 +26,38 @@ pca.	praca
 prç	praca
 prç.	praca
 
+alameda	alameda
 al	alameda
 al.	alameda
 alam	alameda
 alam.	alameda
 
+estrada	estrada
 est	estrada
 est.	estrada
 estr	estrada
 estr.	estrada
 
+rodovia	rodovia
 rod	rodovia
 rod.	rodovia
 
+boulevard	boulevard
+bulevar boulevard
+bulevard    boulevard
 blvd	boulevard
 blvd.	boulevard
 boul	boulevard
 
+beco	beco
 bc	beco
 bc.	beco
 
+viela	viela
 vla	viela
 vla.	viela
 
+passagem	passagem
 pas	passagem
 pas.	passagem
 pass	passagem
@@ -52,81 +65,107 @@ pass.	passagem
 psg	passagem
 psg.	passagem
 
+passarela	passarela
 psa	passarela
 psa.	passarela
 
+ponte	ponte
 pte	ponte
 pte.	ponte
 
+viaduto	viaduto
 vid	viaduto
 vid.	viaduto
 vd	viaduto
 vd.	viaduto
 
+ladeira	ladeira
 lad	ladeira
 lad.	ladeira
 
+escadaria	escadaria
 esc	escadaria
 esc.	escadaria
 
-elev	elevada
-elev.	elevada
+elevado	elevado
+elev	elevado
+elev.	elevado
 
+terminal	terminal
+termin	terminal
 term	terminal
 term.	terminal
 
+marginal	marginal
 marg	marginal
 marg.	marginal
 
+complexo	complexo
 cplx	complexo
 cplx.	complexo
 
+esplanada	esplanada
 esp	esplanada
 esp.	esplanada
 
+largo	largo
 lg	largo
 lg.	largo
 lgo	largo
 lgo.	largo
 
+galeria	galeria
 gal	galeria
 gal.	galeria
 
+feira	feira
 fr	feira
 fr.	feira
 
+mercado	mercado
 merc	mercado
 merc.	mercado
 
+quadra	quadra
 q	quadra
 q.	quadra
 qd	quadra
 qd.	quadra
 
+bosque	bosque
 bsq	bosque
 bsq.	bosque
 
+sitio	sitio
 st	sitio
 st.	sitio
 
+chacara	chacara
+chácara	chacara
 chac	chacara
 chac.	chacara
 
+fazenda	fazenda
 faz	fazenda
 faz.	fazenda
 
+morro	morro
 mo	morro
 mo.	morro
 
+campo	campo
 cpo	campo
 cpo.	campo
 
+vila	vila
 vl	vila
 vl.	vila
 
+colonia	colonia
 col	colonia
 col.	colonia
 
+distrito	distrito
 dist	distrito
 dist.	distrito
 
@@ -144,7 +183,7 @@ conj.	conjunto
 pq	parque
 pq.	parque
 prq	parque
-prq.	parque
+prq	parque
 
 jd	jardim
 jd.	jardim
@@ -163,84 +202,111 @@ cel	coronel
 cel.	coronel
 cnel	coronel
 cnel.	coronel
+coronel	coronel
 
 dr	doutor
 dr.	doutor
 dor	doutor
+doutor	doutor
 
 prof	professor
 prof.	professor
+professor	professor
 
 pe	padre
 pe.	padre
 p.	padre
+padre	padre
 
 pres	presidente
 pres.	presidente
+presidente	presidente
 
 gov	governador
 gov.	governador
+governador	governador
 
 sen	senador
 sen.	senador
+senador	senador
 
 dep	deputado
 dep.	deputado
+deputado	deputado
 
 ver	vereador
 ver.	vereador
+vereador	vereador
 
 gen	general
 gen.	general
+general	general
 
 maj	major
 maj.	major
+major	major
 
 cap	capitao
 cap.	capitao
+capitao	capitao
 
 alm	almirante
 alm.	almirante
+almirante	almirante
 
 brig	brigadeiro
 brig.	brigadeiro
+brigadeiro	brigadeiro
 
 mal	marechal
 mal.	marechal
 mar	marechal
 mar.	marechal
+marechal	marechal
 
 ten	tenente
 ten.	tenente
+tenente	tenente
 
 sgt	sargento
 sgt.	sargento
+sargento	sargento
 
 cb	cabo
 cb.	cabo
+cabo	cabo
 
 sd	soldado
 sd.	soldado
+soldado	soldado
 
 min	ministro
 min.	ministro
+ministro	ministro
 
 mons	monsenhor
 mons.	monsenhor
+monsenhor	monsenhor
 
 bp	bispo
 bp.	bispo
+bispo	bispo
 
 card	cardeal
 card.	cardeal
+cardeal	cardeal
 
 fr	frei
 fr.	frei
+frei	frei
 
 ir	irma
 ir.	irma
+irma	irma
+
 ir	irmao
 ir.	irmao
+irmao	irmao
 
 sto	santo
 sto.	santo
@@ -280,182 +346,243 @@ ant.	antigo
 
 nv	novo
 nv.	novo
+novo	novo
 
 vlh	velho
 vlh.	velho
+velho	velho
 
 princ	principal
 princ.	principal
+principal	principal
 
 cen	central
 cen.	central
+central	central
 
 mun	municipal
 mun.	municipal
+municipal	municipal
 
 est	estadual
 est.	estadual
+estadual	estadual
 
 fed	federal
 fed.	federal
+federal	federal
 
 reg	regional
 reg.	regional
+regional	regional
 
 loc	local
 loc.	local
+local	local
 
 int	interior
 int.	interior
+interior	interior
 
 sup	superior
 sup.	superior
+superior	superior
 
 inf	inferior
 inf.	inferior
+inferior	inferior
 
 alt	alto
 alt.	alto
+alto	alto
 
 bx	baixo
 bx.	baixo
+baixo	baixo
 
-# Additional street types
+#	Additional	street	types
 acamp	acampamento
 acamp.	acampamento
+acampamento	acampamento
 
 ac	acesso
+acesso	acesso
 ac.	acesso
+acesso	acesso
 
 aer	aeroporto
 aer.	aeroporto
+aeroporto	aeroporto
 
 an	anel
 an.	anel
+anel	anel
 
 art	arteria
 art.	arteria
+arteria	arteria
 
 assoc	associacao
 assoc.	associacao
+associacao	associacao
 
 bco	bloco
 bco.	bloco
+bloco	bloco
 
 br	rodovia
 br.	rodovia
+rodovia	rodovia
 
+cais	cais
 cais	cais
 
 calc	calcada
 calc.	calcada
+calcada	calcada
 
 calcadao	calcadao
 
 cam	caminho
 cam.	caminho
+caminho	caminho
 
 can	canal
 can.	canal
+canal	canal
 
 cent	centro
 cent.	centro
+centro	centro
 
 ciclov	ciclovia
 ciclov.	ciclovia
+ciclovia	ciclovia
 
 com	comunidade
 com.	comunidade
+comunidade	comunidade
 
 cont	contorno
 cont.	contorno
+contorno	contorno
 
 corr	corredor
 corr.	corredor
+corredor	corredor
 
 desc	descida
 desc.	descida
+descida	descida
 
 desv	desvio
 desv.	desvio
+desvio	desvio
 
 eix	eixo
 eix.	eixo
+eixo	eixo
 
 eng	engenho
 eng.	engenho
+engenho	engenho
 
 ent	entrada
 ent.	entrada
+entrada	entrada
 
 esc	escada
 esc.	escada
+escada	escada
+escada	escada
 
 estac	estacao
 estac.	estacao
+estacao	estacao
 
 fav	favela
 fav.	favela
+favela	favela
 
 glb	gleba
 glb.	gleba
+gleba	gleba
 
 grj	granja
 grj.	granja
+granja	granja
 
 ilh	ilha
 ilh.	ilha
+ilha	ilha
 
 jard	jardinete
 jard.	jardinete
+jardinete	jardinete
 
 lgo	lago
 lgo.	lago
+lago	lago
 
 lin	linha
 lin.	linha
+linha	linha
 
 marg	margem
 marg.	margem
+margem	margem
 
 mod	modulo
 mod.	modulo
+modulo	modulo
 
 par	paralela
 par.	paralela
+paralela	paralela
 
 pass	passeio
 pass.	passeio
+passeio	passeio
 
+patio	patio
 pat	patio
 pat.	patio
 
+ponta	ponta
 pt	ponta
 pt.	ponta
 
+porto	porto
 pto	porto
 pto.	porto
 
+posto	posto
 psto	posto
 psto.	posto
 
+povoado	povoado
 pov	povoado
 pov.	povoado
 
+praia	praia
 pr	praia
 pr.	praia
 
+prolongamento	prolongamento
 prol	prolongamento
 prol.	prolongamento
 
+ramal	ramal
 ram	ramal
 ram.	ramal
 
+rampa	rampa
 rmp	rampa
 rmp.	rampa
 
 rec	recanto
 rec.	recanto
+recanto	recanto
 
 rot	rotatoria
 rot.	rotatoria
@@ -464,26 +591,34 @@ rotula	rotatoria
 
 serv	servidao
 serv.	servidao
+servidao	servidao
 
 sub	subida
 sub.	subida
+subida	subida
 
+trecho	trecho
 tr	trecho
 tr.	trecho
 
+trevo	trevo
 trev	trevo
 trev.	trevo
 
 un	unidade
 un.	unidade
+unidade	unidade
 
+vale	vale
 val	vale
 val.	vale
 
 ver	vereda
 ver.	vereda
+vereda	vereda
 
 via	via
 
 zon	zona
 zon.	zona
+zona	zona
