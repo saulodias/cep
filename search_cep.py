@@ -67,8 +67,6 @@ class CEPSearcher:
     def search_by_address(self, logradouro: str, limit: int = 10) -> List[Dict]:
         """Busca endereços usando full-text search"""
         logradouro_query = prepare_tsquery(logradouro)
-        print(f"Debug: Original query: {logradouro}")
-        print(f"Debug: Prepared query: {logradouro_query}")
         if not logradouro_query:
             return []
         
@@ -83,10 +81,10 @@ class CEPSearcher:
                     cidade,
                     uf,
                     ts_rank(search_vector, plainto_tsquery('address_pt', 
-                        normalize_address_numbers(%s))) as rank
+                        normalize_address(%s))) as rank
                 FROM ceps_search
                 WHERE search_vector @@ plainto_tsquery('address_pt', 
-                    normalize_address_numbers(%s))
+                    normalize_address(%s))
                 ORDER BY rank DESC
                 LIMIT %s
             """, (logradouro_query, logradouro_query, limit))

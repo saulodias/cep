@@ -18,7 +18,7 @@ BEGIN
                         COALESCE(uf, '');
     
     -- Normalize the address
-    normalized_address := normalize_address_numbers(original_address);
+    normalized_address := normalize_address(original_address);
     
     -- Create tsvector with both versions
     RETURN setweight(to_tsvector('address_pt', normalized_address), 'A') ||

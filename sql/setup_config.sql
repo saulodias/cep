@@ -2,6 +2,8 @@
 DROP TEXT SEARCH CONFIGURATION IF EXISTS public.address_pt CASCADE;
 DROP TEXT SEARCH DICTIONARY IF EXISTS public.address_pt_dict CASCADE;
 
+CREATE EXTENSION IF NOT EXISTS unaccent;
+
 -- Create the configuration
 CREATE TEXT SEARCH CONFIGURATION public.address_pt (COPY = portuguese);
 

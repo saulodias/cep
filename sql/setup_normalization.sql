@@ -125,7 +125,7 @@ INSERT INTO day_numbers (number, word_form) VALUES
 ON CONFLICT (number) DO UPDATE SET word_form = EXCLUDED.word_form;
 
 -- Normalize any numbers in address text (not just with 'de')
-CREATE OR REPLACE FUNCTION normalize_address_numbers(input_text text)
+CREATE OR REPLACE FUNCTION normalize_address(input_text text)
 RETURNS text AS $$
 DECLARE
     result text;
@@ -152,15 +152,17 @@ BEGIN
         END IF;
     END LOOP;
     
-    RETURN result;
+    RETURN unaccent(result);
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 -- Test the normalization
-SELECT normalize_address_numbers('28 de setembro') as test1;
-SELECT normalize_address_numbers('vinte e oito de setembro') as test2;  
-SELECT normalize_address_numbers('rua 28') as test3;  -- Now normalizes!
-SELECT normalize_address_numbers('avenida 1ª') as test4;  -- Ordinals work!
-SELECT normalize_address_numbers('boulevard 28') as test5;  -- Any context!
-SELECT normalize_address_numbers('1o de marco') as test6;
-SELECT normalize_address_numbers('1º de marco') as test7;
+SELECT normalize_address('28 de setembro') as test1;
+SELECT normalize_address('vinte e oito de setembro') as test2;  
+SELECT normalize_address('rua 28') as test3;  -- Now normalizes!
+SELECT normalize_address('avenida 1ª') as test4;  -- Ordinals work!
+SELECT normalize_address('boulevard 28') as test5;  -- Any context!
+SELECT normalize_address('1o de marco') as test6;
+SELECT normalize_address('1º de marco') as test7;
+SELECT normalize_address('10o cartório') as test8;
+
