@@ -21,10 +21,7 @@ BEGIN
     normalized_address := normalize_address_numbers(original_address);
     
     -- Create tsvector with both versions
-    RETURN setweight(to_tsvector('address_pt', 
-        original_address || ' ' ||  -- Original form
-        normalized_address          -- Normalized form
-    ), 'A') ||
+    RETURN setweight(to_tsvector('address_pt', normalized_address), 'A') ||
            setweight(to_tsvector('address_pt', COALESCE(cidade, '')), 'B') ||
            setweight(to_tsvector('address_pt', COALESCE(uf, '')), 'C');
 END;
