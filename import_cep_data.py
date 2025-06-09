@@ -72,6 +72,9 @@ def import_cities(conn):
             """
             INSERT INTO cidades (id, nome, estado_id)
             VALUES %s
+            ON CONFLICT (id) DO UPDATE SET
+                nome = EXCLUDED.nome,
+                estado_id = EXCLUDED.estado_id
             """,
             [(row.id, row.nome, row.estado_id) for _, row in df.iterrows()]
         )
