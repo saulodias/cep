@@ -1,6 +1,6 @@
 # Sistema de Busca de CEP
 
-Um sistema de busca de códigos postais (CEP) brasileiros com capacidades avançadas de tratamento de texto, utilizando a busca full-text do PostgreSQL com suporte a thesaurus personalizado para variações de endereços brasileiros.
+Um sistema de busca de códigos postais (CEP) brasileiros com capacidades avançadas de tratamento de texto, utilizando a busca full-text do PostgreSQL com suporte a um Synonym Dictionary para variações de endereços brasileiros.
 
 ## Atribuição dos Dados
 
@@ -50,29 +50,29 @@ DB_PARAMS = {
 }
 ```
 
-## Configurando o Thesaurus de Endereços
+## Configurando o Synonym Dictionary de Endereços
 
-O sistema utiliza um thesaurus personalizado para lidar com variações de endereços brasileiros (abreviações, diminutivos, etc.). Para configurá-lo:
+O sistema utiliza um Synonym Dictionary (`address_pt.syn`) para lidar com variações de endereços brasileiros (abreviações, diminutivos, etc.). Para configurá-lo:
 
-1. Copie o arquivo do thesaurus para o diretório do PostgreSQL. Você precisará de privilégios de administrador para esta etapa.
+1. Copie o arquivo do Synonym Dictionary para o diretório do PostgreSQL. Você precisará de privilégios de administrador para esta etapa.
    
    Opção 1 - Usando o Git Bash (Executar como Administrador):
    ```bash
-   cp "address_pt.ths" "/c/Program Files/PostgreSQL/17/share/tsearch_data/"
+   cp "address_pt.syn" "/c/Program Files/PostgreSQL/17/share/tsearch_data/"
    ```
    
    Opção 1.1 - Usando CMD do Windows (Executar como Administrador):
    ```cmd
-   copy "address_pt.ths" "C:\Program Files\PostgreSQL\17\share\tsearch_data\"
+   copy "address_pt.syn" "C:\Program Files\PostgreSQL\17\share\tsearch_data\"
    ```
    
    Opção 2 - Cópia manual:
-   - Copie o arquivo `address_pt.ths` deste diretório
+   - Copie o arquivo `address_pt.syn` deste diretório
    - Cole em `C:\Program Files\PostgreSQL\17\share\tsearch_data\`
 
 2. Verifique se o arquivo foi copiado corretamente acessando o diretório do PostgreSQL:
    ```bash
-   ls "/c/Program Files/PostgreSQL/17/share/tsearch_data/address_pt.ths"
+   ls "/c/Program Files/PostgreSQL/17/share/tsearch_data/address_pt.syn"
    ```
 
 ## Configuração do Banco de Dados
@@ -101,7 +101,7 @@ Isso criará o arquivo `csv/cep.csv` que será usado para a importação.
 
 ## Importando os Dados
 
-Após configurar o thesaurus e executar os scripts SQL, e ter decomprimido o arquivo CSV, importe os dados de CEP:
+Após configurar o Synonym Dictionary e executar os scripts SQL, e ter decomprimido o arquivo CSV, importe os dados de CEP:
 
 ```bash
 python import_cep_data.py
@@ -118,7 +118,6 @@ psql -U postgres -d cep_database -f sql/setup_search_vectors.sql
 ```
 
 Isso preencherá os vetores de busca para todos os endereços, garantirá que todos os dados estejam normalizados e prontos para a busca full-text.
-
 
 ## Funcionalidades
 
