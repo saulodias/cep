@@ -1,6 +1,8 @@
--- Active: 1749331579998@@127.0.0.1@5432@cep_database
-
--- CREATE DATABASE cep_database;
+-- Limpe o banco de dados
+DROP TABLE IF EXISTS ceps_search;
+DROP TABLE IF EXISTS ceps;
+DROP TABLE IF EXISTS cidades;
+DROP TABLE IF EXISTS estados;
 
 -- Estados table
 CREATE TABLE IF NOT EXISTS estados (
