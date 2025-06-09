@@ -73,13 +73,14 @@ RETURNS void AS $$
 DECLARE
     total_records integer;
     current_record integer := 0;
-    batch_size integer := 100;
+    batch_size integer := 10000;  -- Increased batch size for better performance
 BEGIN
     -- Get total number of records
     SELECT COUNT(*) INTO total_records FROM ceps_search;
     
     -- Update with progress tracking
     FOR current_record IN 1..total_records BY batch_size LOOP
+        -- Calculate end ID for this batch
         UPDATE ceps_search 
         SET search_vector = create_search_vector(
             logradouro, 
@@ -88,12 +89,12 @@ BEGIN
             cidade, 
             uf
         )
-        WHERE id >= current_record AND id < current_record + batch_size;
+        WHERE id >= current_record AND id < LEAST(current_record + batch_size, total_records + 1);
         
         RAISE NOTICE 'Progress: %%%', round((current_record * 100.0) / total_records, 1);
     END LOOP;
     
-    -- Update remaining records
+    -- Final update for any remaining records
     UPDATE ceps_search 
     SET search_vector = create_search_vector(
         logradouro, 
@@ -102,7 +103,9 @@ BEGIN
         cidade, 
         uf
     )
-    WHERE id >= current_record;
+    WHERE search_vector IS NULL;
+    
+    RAISE NOTICE 'Update complete - Total records processed: %', total_records;
 END;
 $$ LANGUAGE plpgsql;
 
