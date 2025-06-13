@@ -1,0 +1,33 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Set database connection environment variables
+ENV DB_NAME=cep_database
+ENV DB_USER=postgres
+ENV DB_PASSWORD=postgres
+ENV DB_HOST=postgres
+ENV DB_PORT=5432
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    musl-dev \
+    tar \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy import script and CSV data
+COPY import_cep_data.py .
+COPY csv.tar.gz .
+
+# Extract CSV data
+RUN tar -xzf csv.tar.gz
+
+# Command to run the import script
+CMD ["python", "import_cep_data.py"]

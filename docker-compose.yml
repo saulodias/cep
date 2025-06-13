@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  postgres:
+    build: .
+    container_name: cep_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=cep_database
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./csv:/data:ro
+      - ./sql:/docker-entrypoint-initdb.d:ro
+    restart: unless-stopped
+
+  import:
+    build:
+      context: .
+      dockerfile: Dockerfile.import
+    container_name: cep_import
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/cep_database
+    depends_on:
+      - postgres
+    restart: "no"  # This container should run once and exit
+
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: cep_api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres@5432/cep_database
+    depends_on:
+      - import
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

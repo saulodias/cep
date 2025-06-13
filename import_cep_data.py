@@ -2,9 +2,12 @@ import pandas as pd
 import psycopg2
 from psycopg2.extras import execute_values
 import os
-from tqdm import tqdm
+from tqdm_loggable.auto import tqdm
 from dotenv import load_dotenv
 import re
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 # Load environment variables
 load_dotenv()
